@@ -28,12 +28,38 @@ add_shortcode("ahofeed-delivery-site", "ahofeed_delivery_site");
 add_shortcode("ahofeed-case-contents", "ahofeed_case_contents");
 add_filter('the_title',"ahofeed_title");
 
-function ahofeed_title($title) {
 
-	$site = stripslashes(@$_GET['delivery_site']);
+function the_delivery_site()
+{
+  $site = stripslashes(@$_GET['delivery_site']);
+  $delivery = null;
+  foreach(ahofeed_deliveries() as $tmp_delivery)
+  {
+		if(trim($tmp_delivery->name)==trim($site)) 
+		{
+			$delivery = $tmp_delivery;
+			break;
+		}
+	}
+	
+	return $delivery;
+}
+
+function ahofeed_title($title) 
+{
+	$site = the_delivery_site();
 
 	if($site)
-		return $site;
+	{
+    if($site->home_delivery)
+    {
+      return "<span class='home-delivery-title'>" . $site->name . "</span>";
+    }
+    else
+    {
+      return $site->name;
+    }
+	}
 
 	return $title;
 }
@@ -44,7 +70,8 @@ function ahofeed_feed($url,$name) {
 
 	$timestamp = get_option('ahofeed_cache_timestamp_'.$name);
 
-	if($timestamp<time()-(60 * 60 * get_option('ahofeed_cache_hours'))) {
+	if($timestamp < time() - (60 * 60 * get_option('ahofeed_cache_hours')))
+	{
 
 		$handle = @fopen($url, "r");
 
@@ -144,7 +171,16 @@ function ahofeed_delivery_sites() {
 			<div class="icon"></div>
 		</td>
 		<td class="sites-title">
-			<a href="/<?=trim(get_option('ahofeed_delivery_path'),"/")?>/?delivery_site=<?=urlencode($delivery->name)?>" title="<?=$delivery->name?>" rel="bookmark" class="name"><?=$delivery->name?></a>
+			<a href="/<?=trim(get_option('ahofeed_delivery_path'),"/")?>/?delivery_site=<?=urlencode($delivery->name)?>" title="<?=$delivery->name?>" rel="bookmark" class="name">
+			  <?=$delivery->name?>
+			  <?php if($delivery->status == "inactive"): ?>
+			    <br /><span class="coming-soon">Coming Soon...get more info</span>
+			  <?php endif; ?>
+			  
+			  <?php if($delivery->home_delivery && $delivery->passcode_required): ?>
+			    <br /><span class="passcode-required">Passcode required for this site</span>
+			  <?php endif; ?>
+			</a>
 			<div class="address">
 				<?=$delivery->address->line_1?> <?=$delivery->address->line_2?>
 				<?=$delivery->address->city?> <?=$delivery->address->state?> <?=$delivery->address->postal_code?>
@@ -175,14 +211,8 @@ function ahofeed_delivery_site() {
 
 	$site = stripslashes(@$_GET['delivery_site']);
 
-	$delivery = null;
-	foreach(ahofeed_deliveries() as $tmp_delivery) {
-
-		if(trim($tmp_delivery->name)==trim($site)) {
-			$delivery = $tmp_delivery;
-			break;
-		}
-	}
+	$delivery = the_delivery_site();
+	
 
 	if($delivery) {
 		$address = array_filter(array($delivery->address->city,$delivery->address->state,$delivery->address->postal_code),"strlen");
@@ -194,6 +224,9 @@ function ahofeed_delivery_site() {
 	<div class="delivery-site <?=$delivery->status?>">
 
 		<div class="col2">
+		  <?php if($delivery->media): ?>
+		    <iframe width="560" height="315" src="http://www.youtube.com/embed/<?=$delivery->media?>" frameborder="0" allowfullscreen></iframe>
+		  <?php endif; ?>
 
 			<? if($delivery->status=="active") { ?>
 				<a href="#" class="sign-up">Sign Up Now for Service</a>
@@ -211,7 +244,7 @@ function ahofeed_delivery_site() {
 			<div class="box-small">SM $<?=number_format($delivery->box_prices->small,2)?></div>
 			<div class="box-large">LG $<?=number_format($delivery->box_prices->large,2)?></div>
 
-			<? if($delivery->home_delivery) { ?>
+			<? if($delivery->passcode_required) { ?>
 
 				<div class="passcode-required">
 					***IMPORTANT***<br>
