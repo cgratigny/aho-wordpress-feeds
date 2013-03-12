@@ -53,7 +53,7 @@ function ahofeed_title($title)
 	{
     if($site->home_delivery)
     {
-      return "<span class='home-delivery-title'>" . $site->name . "</span>";
+      return $site->name . " <img src='" . plugins_url("assets/house.jpg", __FILE__) . "'/>";
     }
     else
     {
@@ -225,7 +225,7 @@ function ahofeed_delivery_site() {
 
 		<div class="col2">
 		  <?php if($delivery->media): ?>
-		    <iframe width="560" height="315" src="http://www.youtube.com/embed/<?=$delivery->media?>" frameborder="0" allowfullscreen></iframe>
+		    <?=$delivery->media?>
 		  <?php endif; ?>
 
 			<? if($delivery->status=="active") { ?>
@@ -235,7 +235,6 @@ function ahofeed_delivery_site() {
 			<? } ?>
 		</div>
 		<div class="col1">
-
 			<h2 class="welcome">Welcome to this Delivery Site!</h2>	
 			<p><?=$delivery->site_information?></p>
 
