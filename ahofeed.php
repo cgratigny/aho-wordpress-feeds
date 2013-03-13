@@ -196,7 +196,7 @@ function ahofeed_delivery_sites() {
 			<div class="price-small">SM $<?=number_format($delivery->box_prices->small,2)?></div>
 			<div class="price-large">LG $<?=number_format($delivery->box_prices->large,2)?></div>
 		</td>
-		<td><a href="#" class="signup">Signup Up now</a></td>
+		<td><a href="https://my.abundantharvestorganics.com/signup-delivery-step1" class="signup">Signup Up now</a></td>
 	</tr>
 
 	<? } ?>
@@ -225,14 +225,18 @@ function ahofeed_delivery_site() {
 
 		<div class="col2">
 		  <?php if($delivery->media): ?>
-		    <?=$delivery->media?>
+		    <div class="media-player" style="display:block">
+		      <?=$delivery->media?>
+		    </div>
 		  <?php endif; ?>
 
-			<? if($delivery->status=="active") { ?>
-				<a href="#" class="sign-up">Sign Up Now for Service</a>
-			<? } else { ?>
-				<a href="#" class="join-list">Join the Waiting List</a>
-			<? } ?>
+			<div class="sign-up-links" style="display:block">
+			  <? if($delivery->status=="active") { ?>
+  				<a href="https://my.abundantharvestorganics.com/signup-delivery-step1" class="sign-up">Sign Up Now for Service</a>
+  			<? } else { ?>
+  				<a href="https://my.abundantharvestorganics.com/signup-delivery-step1" class="join-list">Join the Waiting List</a>
+  			<? } ?>
+			</div>
 		</div>
 		<div class="col1">
 			<h2 class="welcome">Welcome to this Delivery Site!</h2>	
