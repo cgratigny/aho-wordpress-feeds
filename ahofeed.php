@@ -242,45 +242,47 @@ function ahofeed_delivery_site() {
 			<h2 class="welcome">Welcome to this Delivery Site!</h2>	
 			<p><?=$delivery->site_information?></p>
 
-			<h4>Box Prices for this Delivery Site:</h4>	
+			<?php if($delivery->box_prices && $delivery->box_prices->small): ?>
+			  <h4>Box Prices for this Delivery Site:</h4>	
+  			<div class="box-small">SM $<?=number_format($delivery->box_prices->small, 2)?></div>
+  			<div class="box-large">LG $<?=number_format($delivery->box_prices->large, 2)?></div>
+			<?php endif; ?>
 
-			<div class="box-small">SM $<?=number_format($delivery->box_prices->small,2)?></div>
-			<div class="box-large">LG $<?=number_format($delivery->box_prices->large,2)?></div>
-
-			<? if($delivery->passcode_required) { ?>
-
+			<?php if($delivery->passcode_required): ?>
 				<div class="passcode-required">
 					***IMPORTANT***<br>
 					PASSCODE REQUIRED to sign up for this site. CONTACT the HOST to get the passcode before signing up.
 				</div>
-			<? } ?>
+			<?php endif; ?>
 
-			<h4>Host(s)</h4>	
-			<p><?=$delivery->host_name?></p>
+      <?php if($delivery->host_name): ?>
+        <h4>Host(s)</h4>	
+  			<p><?=$delivery->host_name?></p>
+      <?php endif; ?>
 			
-			<h4>Day and Time</h4>	
-			<p class="day-time">
-				<div class="day"><?=@date("l",$delivery->delivery_day)?></div>
-				<div class="time"><?=$start_time->format('g:ia')?>-<?=$end_time->format('g:ia')?></div>
-			</p>
+			<?php if($delivery->delivery_day): ?>
+			  <h4>Day and Time</h4>	
+  			<p class="day-time">
+  				<?=@date("l",$delivery->delivery_day)?><br />
+  				<?=$start_time->format('g:ia')?>-<?=$end_time->format('g:ia')?>
+  			</p>
+			<?php endif; ?>
 			
-			<h4>Delivery Site Address</h4>	
 			
-			<p class="address">
-				<div class="address1">
-					<?=$delivery->address->line_1?>
-				</div>
+			<?php if($delivery->address && trim($delivery->address->line_1)): ?>
+			  <h4>Delivery Site Address</h4>	
 
-				<div class="city-state-zip">
-					<?=implode(", ",$address)?>
-				</div>
+  			<p>
+  				<?=trim($delivery->address->line_1)?><br />
 
-				<? if($delivery->line_2) { ?>
-					<div class="address2">
-						<?=$delivery->address->line_2?>
-					</div>
-				<? } ?>
-			</p>
+  				<? if($delivery->address->line_2) { ?>
+  					<?=trim($delivery->address->line_2)?><br />
+  				<? } ?>
+  				
+  				<?=trim(implode(", ",$address))?><br />
+  			</p>
+  			<p><a href="https://maps.google.com/maps?q=<?=trim($delivery->address->line_1)?>+<?=trim($delivery->address->line_2)?>+<?=trim(implode("+",$address))?>&hl=en" target="_blank">View Map</a></p>
+			<?php endif; ?>
 
 			<? if($delivery->status=="active") { ?>
 				
