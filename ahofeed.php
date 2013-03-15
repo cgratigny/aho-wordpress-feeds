@@ -270,7 +270,12 @@ function ahofeed_delivery_site() {
 			
 			
 			<?php if($delivery->address && trim($delivery->address->line_1)): ?>
-			  <h4>Delivery Site Address</h4>	
+			  <h4>
+			    Delivery Site Address
+			    <?php if(stristr($delivery->address->line_2, "@") === false): ?>
+			      <a style="color:#c5453e" href="https://maps.google.com/maps?q=<?=trim($delivery->address->line_1)?>+<?=trim($delivery->address->line_2)?>+<?=trim(implode("+",$address))?>&hl=en" target="_blank">View Map</a>
+			    <?php endif; ?>
+			  </h4>	
 
   			<p>
   				<?=trim($delivery->address->line_1)?><br />
@@ -281,7 +286,6 @@ function ahofeed_delivery_site() {
   				
   				<?=trim(implode(", ",$address))?><br />
   			</p>
-  			<p><a href="https://maps.google.com/maps?q=<?=trim($delivery->address->line_1)?>+<?=trim($delivery->address->line_2)?>+<?=trim(implode("+",$address))?>&hl=en" target="_blank">View Map</a></p>
 			<?php endif; ?>
 
 			<? if($delivery->status=="active") { ?>
