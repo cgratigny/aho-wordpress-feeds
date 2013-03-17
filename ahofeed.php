@@ -105,7 +105,7 @@ function ahofeed_case_contents() {
 	<div class="case-contents">
 
 		<div class="current">
-			You are currently viewing the box contents for the week starting <?=$case_contents->start_date->formatted?> and ending <?=$case_contents->end_date->formatted?>
+			You are currently viewing the box contents for the week starting <?=$case_contents->start_date->formatted?> and ending <?=$case_contents->end_date->formatted?>.
 		</div><br />
 
 		<? if (!$case_contents) { ?>
