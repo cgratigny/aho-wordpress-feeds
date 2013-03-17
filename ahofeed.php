@@ -105,7 +105,7 @@ function ahofeed_case_contents() {
 	<div class="case-contents">
 
 		<div class="current">
-			You are currently viewing the box contents for the week starting <?=$case_contents->start_date->formatted?> and ending <?=$case_contents->end_date->formatted?> View Previous Weeks</a>
+			You are currently viewing the box contents for the week starting <?=$case_contents->start_date->formatted?> and ending <?=$case_contents->end_date->formatted?>
 		</div>
 
 		<? if (!$case_contents) { ?>
@@ -118,8 +118,8 @@ function ahofeed_case_contents() {
 			    <thead>
 		    	<tr>
 			    	<th>Produce</th>
-			    	<th>In Small Box</th>
-			    	<th>In Large Box</th>
+			    	<th class="in-small-box">In Small Box</th>
+			    	<th class="in-large-box">In Large Box</th>
 			    </tr>
 				</thead>
 
@@ -128,10 +128,10 @@ function ahofeed_case_contents() {
 			    	<tr>
 				    	<td><div class="name"><?=$case_content->name?></div></td>
 				    	<td>
-				    		<div class="in-box <?=($case_content->small ? "yes" : "no")?>"></div>
+				    		<div class="in-box <?=($case_content->small ? "yes" : "no")?>"><?=($case_content->small ? "yes" : "no")?></div>
 				    	</td>
 				    	<td>
-				    		<div class="in-box <?=($case_content->large ? "yes" : "no")?>"></div>
+				    		<div class="in-box <?=($case_content->large ? "yes" : "no")?>"><?=($case_content->large ? "yes" : "no")?></div>
 				    	</td>
 				    </tr>
 				    <? } ?>
