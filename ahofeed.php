@@ -234,7 +234,7 @@ function ahofeed_delivery_site() {
 			  <? if($delivery->status=="active") { ?>
   				<a href="https://my.abundantharvestorganics.com/signup-delivery-step1" class="sign-up">Sign Up Now for Service</a>
   			<? } else { ?>
-  				<a href="https://my.abundantharvestorganics.com/signup-delivery-step1" class="join-list">Join the Waiting List</a>
+  				<a href="https://my.abundantharvestorganics.com/signup-delivery-step1" class="sign-up">Join the Waiting List</a>
   			<? } ?>
 			</div>
 		</div>
