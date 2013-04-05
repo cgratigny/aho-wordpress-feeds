@@ -25,7 +25,12 @@ function ahofeed_admin_actions() {
 add_action('admin_menu', 'ahofeed_admin_actions');
 add_shortcode("ahofeed-delivery-sites", "ahofeed_delivery_sites");
 add_shortcode("ahofeed-delivery-site", "ahofeed_delivery_site");
-add_shortcode("ahofeed-case-contents", "ahofeed_case_contents");
+
+// the monday charge day
+add_shortcode("ahofeed-case-contents-mon", "ahofeed_case_contents_mon");
+// the thursday charge day
+add_shortcode("ahofeed-case-contents-thurs", "ahofeed_case_contents_thurs");
+
 add_filter('the_title',"ahofeed_title");
 
 
@@ -96,9 +101,18 @@ function ahofeed_deliveries() {
 	return (array)ahofeed_feed(get_option('ahofeed_delivery_sites_url'),"delivery_sites");
 }
 
+function ahofeed_case_contents_mon()
+{
+	return ahofeed_case_contents('1');
+}
 
-function ahofeed_case_contents() {
-	$case_contents = ahofeed_feed(get_option('ahofeed_case_contents_url'),"case_contents");
+function ahofeed_case_contents_thurs()
+{
+	return ahofeed_case_contents('2');
+}
+
+function ahofeed_case_contents($id=1) {
+	$case_contents = ahofeed_feed(get_option('ahofeed_case_contents_url').'?charge_time_id='.$id,"case_contents_".$id);
 
 ?>
 
@@ -186,17 +200,17 @@ function ahofeed_delivery_sites() {
 				<?=$delivery->address->city?> <?=$delivery->address->state?> <?=$delivery->address->postal_code?>
 			</div>
 		</td>
-		<td>
+		<td class="sites-delivery-time">
 			<div class="day"><?=@date("l",$delivery->delivery_day)?></div>
 			<div class="time">
 				<?=$start_time->format('g:ia')?>-<?=$end_time->format('g:ia')?>
 			</div>
 		</td>
-		<td>
+		<td class="sites-box-price">
 			<div class="price-small">SM $<?=number_format($delivery->box_prices->small,2)?></div>
 			<div class="price-large">LG $<?=number_format($delivery->box_prices->large,2)?></div>
 		</td>
-		<td><a href="https://my.abundantharvestorganics.com/signup-delivery-step1" class="signup">Signup Up now</a></td>
+		<td class="sites-sign-up"><a href="https://my.abundantharvestorganics.com/signup-delivery-step1" class="button">Sign Up NOW</a></td>
 	</tr>
 
 	<? } ?>
