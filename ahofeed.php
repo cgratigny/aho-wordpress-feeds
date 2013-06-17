@@ -298,19 +298,16 @@ function ahofeed_delivery_site() {
   			</p>
 			<?php endif; ?>
 
-			<? if($delivery->status=="active") { ?>
-				
-				<? if($delivery->phone) { ?>
-					<p class="phone"><label>Phone:</label><?=$delivery->phone?></p>
-				<? } ?>
+			<? if($delivery->phone) { ?>
+				<p class="phone"><label>Phone:</label><?=$delivery->phone?></p>
+			<? } ?>
 
-				<? if($delivery->phone1) { ?>
-					<p class="phone-alt"><label>Alternate Phone:</label><?=$delivery->phone1?></p>
-				<? } ?>
+			<? if($delivery->phone1) { ?>
+				<p class="phone-alt"><label>Alternate Phone:</label><?=$delivery->phone1?></p>
+			<? } ?>
 
-				<? if($delivery->host_email) { ?>
-					<p class="email"><label>Email: </label> <a href="mailto:<?=$delivery->host_email?>"><?=$delivery->host_email?></a></p>
-				<? } ?>
+			<? if($delivery->host_email) { ?>
+				<p class="email"><label>Email: </label> <a href="mailto:<?=$delivery->host_email?>"><?=$delivery->host_email?></a></p>
 			<? } ?>
 
 			<? if($delivery->additional_information) { ?>
