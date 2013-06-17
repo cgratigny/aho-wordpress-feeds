@@ -1,11 +1,7 @@
 <?php 
 /*
 Plugin Name: AHO Delivery Feed
-Plugin URI: http://www.firestitch.com
 Description: Plugin for displaying deliveries from the AHO application
-Author: Raymond Gigliotti
-Version: 1.0
-Author URI: http://www.firestitch.com
 */
 
 function p($s) {
@@ -31,7 +27,7 @@ add_shortcode("ahofeed-case-contents-mon", "ahofeed_case_contents_mon");
 // the thursday charge day
 add_shortcode("ahofeed-case-contents-thurs", "ahofeed_case_contents_thurs");
 
-add_filter('the_title',"ahofeed_title");
+//add_filter('the_title',"ahofeed_title");
 
 
 function the_delivery_site()
@@ -188,7 +184,7 @@ function ahofeed_delivery_sites() {
 			<a href="/<?=trim(get_option('ahofeed_delivery_path'),"/")?>/?delivery_site=<?=urlencode($delivery->name)?>" title="<?=$delivery->name?>" rel="bookmark" class="name">
 			  <?=$delivery->name?>
 			  <?php if($delivery->status == "inactive"): ?>
-			    <br /><span class="coming-soon">Coming Soon...get more info</span>
+			    <br /><span class="coming-soon">Deliveries Coming Soon...get more info</span>
 			  <?php endif; ?>
 			  
 			  <?php if($delivery->home_delivery && $delivery->passcode_required): ?>
