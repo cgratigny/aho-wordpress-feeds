@@ -4,17 +4,20 @@ Plugin Name: AHO Delivery Feed
 Description: Plugin for displaying deliveries from the AHO application
 */
 
-function p($s) {
+function p($s) 
+{
 	echo "<pre>";
 	print_r($s);
 	echo "</pre>";
 }
 
-function ahofeed_admin() {
+function ahofeed_admin() 
+{
 	include('ahofeed_admin.php');
 }
 
-function ahofeed_admin_actions() {
+function ahofeed_admin_actions() 
+{
     add_options_page("AHOFeed", "AHOFeed", 1, "AHOFeed", "ahofeed_admin");
 }
 
@@ -67,7 +70,8 @@ function ahofeed_title($title)
 	return $title;
 }
 
-function ahofeed_feed($url,$name) {
+function ahofeed_feed($url,$name) 
+{
 
 	$data = get_option('ahofeed_cache_'.$name);
 
@@ -94,7 +98,8 @@ function ahofeed_feed($url,$name) {
 	return json_decode($data);
 }
 
-function ahofeed_deliveries() {
+function ahofeed_deliveries() 
+{
 	return (array)ahofeed_feed(get_option('ahofeed_delivery_sites_url'),"delivery_sites");
 }
 
@@ -113,17 +118,39 @@ function ahofeed_case_contents_thurs_11()
 	return ahofeed_case_contents('3');
 }
 
-function ahofeed_case_contents($id=1) {
+function ahofeed_case_contents($id=1) 
+{
 	$case_contents = ahofeed_feed(get_option('ahofeed_case_contents_url').'?charge_time_id='.$id,"case_contents_".$id);
 
 ?>
 
 	<div class="case-contents">
 
-		<div class="current">
-			You are currently viewing the box contents for the week starting <?=$case_contents->start_date->formatted?> and ending <?=$case_contents->end_date->formatted?>.
-		</div><br />
+		<div style="float:right; width:400px;">
+			<img src="https://my.abundantharvestorganics.com/images/Weeklyboxrecipes-logo-link-bevel.jpg" />
+		</div>
 
+		<div style="float:left; width:400px;">
+			<div class="current">
+				You are currently viewing the box contents for the week starting <?=$case_contents->start_date->formatted?> and ending <?=$case_contents->end_date->formatted?>.
+			</div><br />
+	
+			<p>
+				<em>
+					<strong>
+						Subscribers: 
+					</strong>
+					Case contents will vary depending on your delivery day. Log into your account and select "View Case Contents" on your Subscription Dashboard to see what's in your case this week.
+				</em>
+			</p>
+
+			<p>
+				<a href="#">View Previous Week</a> | <a href="#">View Next Week</a>
+			</p>
+
+		</div>
+
+		<br style="clear:both" />
 		<? if (!$case_contents) { ?>
 			<p>
 			    <strong>The case contents have not been published for this week yet.</strong>
@@ -159,7 +186,8 @@ function ahofeed_case_contents($id=1) {
 
 }
 
-function ahofeed_delivery_sites() {
+function ahofeed_delivery_sites() 
+{
 	
 	$deliveries = ahofeed_deliveries();
 
@@ -223,7 +251,8 @@ function ahofeed_delivery_sites() {
 
 }
 
-function ahofeed_delivery_site() {
+function ahofeed_delivery_site() 
+{
 
 	$site = stripslashes(@$_GET['delivery_site']);
 
@@ -328,5 +357,4 @@ function ahofeed_delivery_site() {
 	<?
 
 	}
-
 }

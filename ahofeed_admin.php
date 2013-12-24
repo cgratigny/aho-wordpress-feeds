@@ -5,7 +5,8 @@ $ahofeed_case_contents_url = get_option('ahofeed_case_contents_url');
 $ahofeed_delivery_path = get_option('ahofeed_delivery_path');
 $ahofeed_cache_hours = get_option('ahofeed_cache_hours');
 
-if($_POST['ahofeed_hidden'] == 'Y') {
+if($_POST['ahofeed_hidden'] == 'Y') 
+{
 	
 	$ahofeed_delivery_sites_url = $_POST['ahofeed_delivery_sites_url'];
 	update_option('ahofeed_delivery_sites_url', $ahofeed_delivery_sites_url);
