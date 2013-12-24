@@ -24,8 +24,10 @@ add_shortcode("ahofeed-delivery-site", "ahofeed_delivery_site");
 
 // the monday charge day
 add_shortcode("ahofeed-case-contents-mon", "ahofeed_case_contents_mon");
-// the thursday charge day
-add_shortcode("ahofeed-case-contents-thurs", "ahofeed_case_contents_thurs");
+// the thursday 9:00 charge day
+add_shortcode("ahofeed-case-contents-thurs-9", "ahofeed_case_contents_thurs_9");
+// the thursday 11:00 charge day
+add_shortcode("ahofeed-case-contents-thurs-11", "ahofeed_case_contents_thurs_11");
 
 //add_filter('the_title',"ahofeed_title");
 
@@ -73,7 +75,6 @@ function ahofeed_feed($url,$name) {
 
 	if($timestamp < time() - (60 * 60 * get_option('ahofeed_cache_hours')))
 	{
-
 		$handle = @fopen($url, "r");
 
 		$result = @fread($handler,8192);
@@ -102,9 +103,14 @@ function ahofeed_case_contents_mon()
 	return ahofeed_case_contents('1');
 }
 
-function ahofeed_case_contents_thurs()
+function ahofeed_case_contents_thurs_9()
 {
 	return ahofeed_case_contents('2');
+}
+
+function ahofeed_case_contents_thurs_11()
+{
+	return ahofeed_case_contents('3');
 }
 
 function ahofeed_case_contents($id=1) {
@@ -187,7 +193,7 @@ function ahofeed_delivery_sites() {
 			    <br /><span class="coming-soon">Deliveries Coming Soon...get more info</span>
 			  <?php endif; ?>
 			  
-			  <?php if($delivery->home_delivery && $delivery->passcode_required): ?>
+			  <?php if($delivery->home_delivery && $delivery->authenticate): ?>
 			    <br /><span class="passcode-required">Passcode required for this site</span>
 			  <?php endif; ?>
 			</a>
@@ -197,7 +203,7 @@ function ahofeed_delivery_sites() {
 			</div>
 		</td>
 		<td class="sites-delivery-time">
-			<div class="day"><?=@date("l",$delivery->delivery_day)?></div>
+			<div class="day"><?=$delivery->delivery_day?></div>
 			<div class="time">
 				<?=$start_time->format('g:ia')?>-<?=$end_time->format('g:ia')?>
 			</div>
@@ -206,7 +212,7 @@ function ahofeed_delivery_sites() {
 			<div class="price-small">SM $<?=number_format($delivery->box_prices->small,2)?></div>
 			<div class="price-large">LG $<?=number_format($delivery->box_prices->large,2)?></div>
 		</td>
-		<td class="sites-sign-up"><a href="https://my.abundantharvestorganics.com/signup-delivery-step1" class="button">Sign Up NOW</a></td>
+		<td class="sites-sign-up"><a href="https://my.abundantharvestorganics.com/users/signup?site=<?=$delivery->slug?>" class="button">Sign Up NOW</a></td>
 	</tr>
 
 	<? } ?>
@@ -227,30 +233,28 @@ function ahofeed_delivery_site() {
 	if($delivery) {
 		$address = array_filter(array($delivery->address->city,$delivery->address->state,$delivery->address->postal_code),"strlen");
 
-		$start_time = new DateTime($delivery->delivery_start_time);
-		$end_time 	= new DateTime($delivery->delivery_end_time);
+		$start_time = new DateTime($delivery->start_time);
+		$end_time = new DateTime($delivery->end_time);
 	?>
 
 	<div class="delivery-site <?=$delivery->status?>">
 
 		<div class="col2">
-		  <?php if($delivery->media): ?>
 		    <div class="media-player" style="display:block">
-		      <?=$delivery->media?>
+		      '<iframe width="418" height="235" src="http://www.youtube.com/embed/x3pAK4g_lO8?list=UUTj4QC8sMTGOptbM6lDCXSw" frameborder="0" allowfullscreen></iframe>
 		    </div>
-		  <?php endif; ?>
 
 			<div class="sign-up-links" style="display:block">
 			  <? if($delivery->status=="active") { ?>
-  				<a href="https://my.abundantharvestorganics.com/signup-delivery-step1" class="sign-up">Sign Up Now for Service</a>
+  				<a href="https://my.abundantharvestorganics.com/users/signup?site=<?=$delivery->slug?>" class="sign-up">Sign Up Now for Service</a>
   			<? } else { ?>
-  				<a href="https://my.abundantharvestorganics.com/signup-delivery-step1" class="sign-up">Join the Waiting List</a>
+  				<a href="https://my.abundantharvestorganics.com/users/signup?site=<?=$delivery->slug?>" class="sign-up">Join the Waiting List</a>
   			<? } ?>
 			</div>
 		</div>
 		<div class="col1">
 			<h2 class="welcome">Welcome to this Delivery Site!</h2>	
-			<p><?=$delivery->site_information?></p>
+			<p><?=$delivery->host_message?></p>
 
 			<?php if($delivery->box_prices && $delivery->box_prices->small): ?>
 			  <h4>Box Prices for this Delivery Site:</h4>	
@@ -273,7 +277,7 @@ function ahofeed_delivery_site() {
 			<?php if($delivery->delivery_day): ?>
 			  <h4>Day and Time</h4>	
   			<p class="day-time">
-  				<?=@date("l",$delivery->delivery_day)?><br />
+  				<?=$delivery->delivery_day?><br />
   				<?=$start_time->format('g:ia')?>-<?=$end_time->format('g:ia')?>
   			</p>
 			<?php endif; ?>
@@ -298,12 +302,12 @@ function ahofeed_delivery_site() {
   			</p>
 			<?php endif; ?>
 
-			<? if($delivery->phone) { ?>
-				<p class="phone"><label>Phone:</label><?=$delivery->phone?></p>
+			<? if($delivery->home_phone) { ?>
+				<p class="phone"><label>Phone:</label><?=$delivery->home_phone?></p>
 			<? } ?>
 
-			<? if($delivery->phone1) { ?>
-				<p class="phone-alt"><label>Alternate Phone:</label><?=$delivery->phone1?></p>
+			<? if($delivery->cell_phone) { ?>
+				<p class="phone-alt"><label>Alternate Phone:</label><?=$delivery->cell_phone?></p>
 			<? } ?>
 
 			<? if($delivery->host_email) { ?>
