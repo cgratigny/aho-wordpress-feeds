@@ -1,31 +1,30 @@
 <?php 
 
-$ahofeed_delivery_sites_url = get_option('ahofeed_delivery_sites_url');
-$ahofeed_case_contents_url = get_option('ahofeed_case_contents_url');
-$ahofeed_delivery_path = get_option('ahofeed_delivery_path');
-$ahofeed_cache_hours = get_option('ahofeed_cache_hours');
+	$ahofeed_delivery_sites_url 	= get_option('ahofeed_delivery_sites_url');
+	$ahofeed_case_contents_url 		= get_option('ahofeed_case_contents_url');
+	$ahofeed_delivery_path 			= get_option('ahofeed_delivery_path');
+	$ahofeed_cache_hours 			= get_option('ahofeed_cache_hours');
 
-if($_POST['ahofeed_hidden'] == 'Y') 
-{
+	if($_POST['ahofeed_hidden'] == 'Y') {
+		
+		$ahofeed_delivery_sites_url = $_POST['ahofeed_delivery_sites_url'];
+		update_option('ahofeed_delivery_sites_url', $ahofeed_delivery_sites_url);
+		
+		$ahofeed_case_contents_url = $_POST['ahofeed_case_contents_url'];
+		update_option('ahofeed_case_contents_url', $ahofeed_case_contents_url);		
+
+		$ahofeed_delivery_path = $_POST['ahofeed_delivery_path'];
+		update_option('ahofeed_delivery_path', $ahofeed_delivery_path);		
+
+
+		$ahofeed_cache_hours = $_POST['ahofeed_cache_hours'];
+		update_option('ahofeed_cache_hours', $ahofeed_cache_hours);				
+
+		?>
+		<div class="updated"><p><strong><?php _e('Options saved.' ); ?></strong></p></div>
+		<?php
+	}
 	
-	$ahofeed_delivery_sites_url = $_POST['ahofeed_delivery_sites_url'];
-	update_option('ahofeed_delivery_sites_url', $ahofeed_delivery_sites_url);
-	
-	$ahofeed_case_contents_url = $_POST['ahofeed_case_contents_url'];
-	update_option('ahofeed_case_contents_url', $ahofeed_case_contents_url);		
-
-	$ahofeed_delivery_path = $_POST['ahofeed_delivery_path'];
-	update_option('ahofeed_delivery_path', $ahofeed_delivery_path);		
-
-
-	$ahofeed_cache_hours = $_POST['ahofeed_cache_hours'];
-	update_option('ahofeed_cache_hours', $ahofeed_cache_hours);				
-
-	?>
-	<div class="updated"><p><strong><?php _e('Options saved.' ); ?></strong></p></div>
-	<?php
-}
-
 ?>
 
 <div class="wrap">

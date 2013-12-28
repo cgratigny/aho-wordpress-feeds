@@ -144,9 +144,9 @@ function ahofeed_case_contents($id=1)
 				</em>
 			</p>
 
-			<p>
-				<a href="#">View Previous Week</a> | <a href="#">View Next Week</a>
-			</p>
+		<a href="#">View Previous Week</a>
+
+		<a href="#">View Next Week</a>
 
 		</div>
 
@@ -206,8 +206,8 @@ function ahofeed_delivery_sites()
 	<? foreach($deliveries as $delivery) { ?>
 
 	<?
-		$start_time = new DateTime($delivery->delivery_start_time);
-		$end_time 	= new DateTime($delivery->delivery_end_time);
+		$start_time = new DateTime(date("Y-m-d H:i:s",strtotime(str_replace(array("T","Z"),"",$delivery->delivery_start_time))));
+		$end_time 	= new DateTime(date("Y-m-d H:i:s",strtotime(str_replace(array("T","Z"),"",$delivery->delivery_end_time))));
 	?>
 
 	<tr>	
@@ -217,7 +217,7 @@ function ahofeed_delivery_sites()
 		<td class="sites-title">
 			<a href="/<?=trim(get_option('ahofeed_delivery_path'),"/")?>/?delivery_site=<?=urlencode($delivery->name)?>" title="<?=$delivery->name?>" rel="bookmark" class="name">
 			  <?=$delivery->name?>
-			  <?php if($delivery->status == "inactive"): ?>
+			  <?php if($delivery->status == "pending"): ?>
 			    <br /><span class="coming-soon">Deliveries Coming Soon...get more info</span>
 			  <?php endif; ?>
 			  
@@ -226,14 +226,14 @@ function ahofeed_delivery_sites()
 			  <?php endif; ?>
 			</a>
 			<div class="address">
-				<?=$delivery->address->line_1?> <?=$delivery->address->line_2?>
+				<?=$delivery->address->address1?> <?=$delivery->address->address2?>
 				<?=$delivery->address->city?> <?=$delivery->address->state?> <?=$delivery->address->postal_code?>
 			</div>
 		</td>
 		<td class="sites-delivery-time">
 			<div class="day"><?=$delivery->delivery_day?></div>
 			<div class="time">
-				<?=$start_time->format('g:ia')?>-<?=$end_time->format('g:ia')?>
+				<?=date("g:ia",strtotime(str_replace(array("T","Z"),"",$delivery->start_time)))?>-<?=date("g:ia",strtotime(str_replace(array("T","Z"),"",$delivery->end_time)))?>
 			</div>
 		</td>
 		<td class="sites-box-price">
@@ -262,8 +262,6 @@ function ahofeed_delivery_site()
 	if($delivery) {
 		$address = array_filter(array($delivery->address->city,$delivery->address->state,$delivery->address->postal_code),"strlen");
 
-		$start_time = new DateTime($delivery->start_time);
-		$end_time = new DateTime($delivery->end_time);
 	?>
 
 	<div class="delivery-site <?=$delivery->status?>">
@@ -291,10 +289,14 @@ function ahofeed_delivery_site()
   			<div class="box-large">LG $<?=number_format($delivery->box_prices->large, 2)?></div>
 			<?php endif; ?>
 
-			<?php if($delivery->passcode_required): ?>
+			<?php if($delivery->authenticate): ?>
 				<div class="passcode-required">
+					<? if ($delivery->home_site_message): ?>
+					<?=$delivery->home_site_message?>
+					<? else: ?>
 					***IMPORTANT***<br>
 					PASSCODE REQUIRED to sign up for this site. CONTACT the HOST to get the passcode before signing up.
+					<? endif; ?>
 				</div>
 			<?php endif; ?>
 
@@ -307,23 +309,23 @@ function ahofeed_delivery_site()
 			  <h4>Day and Time</h4>	
   			<p class="day-time">
   				<?=$delivery->delivery_day?><br />
-  				<?=$start_time->format('g:ia')?>-<?=$end_time->format('g:ia')?>
+  				<?=date("g:ia",strtotime(str_replace(array("T","Z"),"",$delivery->start_time)))?>-<?=date("g:ia",strtotime(str_replace(array("T","Z"),"",$delivery->end_time)))?>
   			</p>
 			<?php endif; ?>
 			
 			
-			<?php if($delivery->address && trim($delivery->address->line_1)): ?>
+			<?php if($delivery->address && trim($delivery->address->address1)): ?>
 			  <h4>
 			    Delivery Site Address
-			    <?php if(stristr($delivery->address->line_2, "@") === false): ?>
-			      <a style="color:#c5453e" href="https://maps.google.com/maps?q=<?=trim($delivery->address->line_1)?>+<?=trim($delivery->address->line_2)?>+<?=trim(implode("+",$address))?>&hl=en" target="_blank">View Map</a>
-			    <?php endif; ?>
+			    <?php if(stristr($delivery->address->address1, "@") === false): ?>
+			      <a style="color:#c5453e" href="https://maps.google.com/maps?q=<?=trim($delivery->address->address1)?>+<?=trim($delivery->address->line_2)?>+<?=trim(implode("+",$address))?>&hl=en" target="_blank">View Map</a>
+			    <?$delivery->address->address1; endif; ?>
 			  </h4>	
 
   			<p>
-  				<?=trim($delivery->address->line_1)?><br />
+  				<?=trim($delivery->address->address1)?><br />
 
-  				<? if($delivery->address->line_2) { ?>
+  				<? if($delivery->address->address2) { ?>
   					<?=trim($delivery->address->line_2)?><br />
   				<? } ?>
   				
@@ -348,7 +350,7 @@ function ahofeed_delivery_site()
 			<? } ?>
 
 			<? if($delivery->host_message) { ?>
-				<p class="host-message"><label>Host Message: </label><?=$delivery->host_message?></p>
+				<br /><p class="host-message"><label>Host Message: </label><?=$delivery->host_message?></p>
 			<? } ?>
 		</div>
 
