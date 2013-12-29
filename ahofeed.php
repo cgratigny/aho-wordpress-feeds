@@ -240,7 +240,7 @@ function ahofeed_delivery_sites()
 			<div class="price-small">SM $<?=number_format($delivery->box_prices->small,2)?></div>
 			<div class="price-large">LG $<?=number_format($delivery->box_prices->large,2)?></div>
 		</td>
-		<td class="sites-sign-up"><a href="https://my.abundantharvestorganics.com/users/signup?site=<?=$delivery->slug?>" class="button">Sign Up NOW</a></td>
+		<td class="sites-sign-up"><a href="https://my.abundantharvestorganics.com/users/sign_up?site=<?=$delivery->slug?>" class="button">Sign Up NOW</a></td>
 	</tr>
 
 	<? } ?>
@@ -273,9 +273,9 @@ function ahofeed_delivery_site()
 
 			<div class="sign-up-links" style="display:block">
 			  <? if($delivery->status=="active") { ?>
-  				<a href="https://my.abundantharvestorganics.com/users/signup?site=<?=$delivery->slug?>" class="sign-up">Sign Up Now for Service</a>
+  				<a href="https://my.abundantharvestorganics.com/users/sign_up?site=<?=$delivery->slug?>" class="sign-up">Sign Up Now for Service</a>
   			<? } else { ?>
-  				<a href="https://my.abundantharvestorganics.com/users/signup?site=<?=$delivery->slug?>" class="sign-up">Join the Waiting List</a>
+  				<a href="https://my.abundantharvestorganics.com/users/sign_up?site=<?=$delivery->slug?>" class="sign-up">Join the Waiting List</a>
   			<? } ?>
 			</div>
 		</div>
