@@ -1,0 +1,65 @@
+/* This stylesheet is used to style the public-facing components of the plugin. */
+#aho-addons table.table
+{
+  border: none;
+  border-collapse: collapse;
+  margin: 10px;
+}
+
+#aho-addons table.table th
+{
+  background: #754C24;
+  color: #FFF;
+  letter-spacing: 1px;
+  text-transform: capitalize;
+  padding: 10px;
+}
+
+#aho-addons table.table td
+{
+  border: 1px solid #e8e8e8;
+  font-size: 0.8rem;
+  padding: 5px 10px;
+}
+
+#aho-addons .navigate-weeks a
+{
+  display: inline-block;
+}
+
+#aho-addons .navigate-weeks a:last-child
+{
+  float: right;
+}
+
+#aho-addons .col-lg-4
+{
+  margin: 0;
+  padding: 0;
+  width: 33%%;
+}
+
+#aho-addons .col-lg-8
+{
+  margin: 0;
+  padding: 0;
+  width: 60%;
+}
+
+#aho-addons .pull-left
+{
+  float: left;
+}
+
+#aho-addons .pull-right
+{
+  float: right;
+  margin: 0 10px;
+}
+
+#aho-addons .row:after
+{
+  content: "";
+  display: block;
+  clear: both;
+}

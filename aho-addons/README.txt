@@ -1,0 +1,1 @@
+This plugin displays the box contents for the week and charge time.
