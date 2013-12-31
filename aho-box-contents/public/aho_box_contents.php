@@ -281,11 +281,7 @@ class Aho_Box_Contents {
 	}
 
 	/**
-	 * NOTE:  Actions are points in the execution of a page or process
-	 *        lifecycle that WordPress fires.
-	 *
-	 *        Actions:    http://codex.wordpress.org/Plugin_API#Actions
-	 *        Reference:  http://codex.wordpress.org/Plugin_API/Action_Reference
+	 * NOTE:  invoke via [box_contents] shortcode
 	 *
 	 * @since    1.0.0
 	 */

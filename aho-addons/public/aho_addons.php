@@ -57,8 +57,8 @@ class Aho_Addons {
 	 */
 	protected static $instance = null;
 
-	// private $base_uri = "https://my.abundantharvestorganics.com/api/";
-	private $base_uri = "http://localhost:5000/api/";
+	private $base_uri = "https://my.abundantharvestorganics.com/api/";
+	// private $base_uri = "http://localhost:5000/api/";
 
 	/**
 	 * Initialize the plugin by setting localization and loading public scripts
@@ -282,11 +282,7 @@ class Aho_Addons {
 	}
 
 	/**
-	 * NOTE:  Actions are points in the execution of a page or process
-	 *        lifecycle that WordPress fires.
-	 *
-	 *        Actions:    http://codex.wordpress.org/Plugin_API#Actions
-	 *        Reference:  http://codex.wordpress.org/Plugin_API/Action_Reference
+	 * NOTE:  invoke via [addons] shortcode
 	 *
 	 * @since    1.0.0
 	 */
