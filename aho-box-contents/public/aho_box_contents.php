@@ -57,8 +57,8 @@ class Aho_Box_Contents {
 	 */
 	protected static $instance = null;
 
-	private $base_uri = "https://my.abundantharvestorganics.com/api/";
-	// private $base_uri = "http://localhost:5000/api/";
+	// private $base_uri = "https://my.abundantharvestorganics.com/api/";
+	private $base_uri = "http://localhost:5000/api/";
 
 	/**
 	 * Initialize the plugin by setting localization and loading public scripts
