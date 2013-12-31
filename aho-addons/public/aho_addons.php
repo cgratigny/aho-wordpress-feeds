@@ -355,16 +355,7 @@ class Aho_Addons {
 	private function get_week()
 	{
 		$weeks = $this->load_weeks();
-		$week = array_filter($weeks, function($week){
-			if(isset($_GET["week"]))
-			{
-				return $_GET["week"] == $week->id;
-			}
-			else
-			{
-				return date("Y-m-d") >= $week->start_date && date("Y-m-d") <= $week->end_date;
-			}
-		});
+		$week = array_filter($weeks, array($this, "filter_week"));
 
 		if(!is_array($week))
 		{
@@ -372,6 +363,25 @@ class Aho_Addons {
 		}
 
 		return array_pop($week);
+	}
+
+
+	/**
+	 * Check to see if the week that the user is requesting is the current week object
+	 *
+	 * @return bool
+	 * @author Brandon Hansen
+	 **/
+	public function filter_week($week)
+	{
+		if(isset($_GET["week"]))
+		{
+			return $_GET["week"] == $week->id;
+		}
+		else
+		{
+			return date("Y-m-d") >= $week->start_date && date("Y-m-d") <= $week->end_date;
+		}
 	}
 
 

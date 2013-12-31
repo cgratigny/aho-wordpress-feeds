@@ -58,6 +58,7 @@ class Aho_Box_Contents {
 	protected static $instance = null;
 
 	private $base_uri = "https://my.abundantharvestorganics.com/api/";
+	// private $base_uri = "http://localhost:5000/api/";
 
 	/**
 	 * Initialize the plugin by setting localization and loading public scripts
@@ -377,16 +378,7 @@ class Aho_Box_Contents {
 	private function get_week()
 	{
 		$weeks = $this->load_weeks();
-		$week = array_filter($weeks, function($week){
-			if(isset($_GET["week_id"]))
-			{
-				return $_GET["week_id"] == $week->id;
-			}
-			else
-			{
-				return date("Y-m-d") >= $week->start_date && date("Y-m-d") <= $week->end_date;
-			}
-		});
+		$week = array_filter($weeks, array($this, "filter_week"));
 
 		if(!is_array($week))
 		{
@@ -394,6 +386,25 @@ class Aho_Box_Contents {
 		}
 
 		return array_pop($week);
+	}
+
+
+	/**
+	 * Check to see if the week that the user is requesting is the current week object
+	 *
+	 * @return bool
+	 * @author Brandon Hansen
+	 **/
+	public function filter_week($week)
+	{
+		if(isset($_GET["week_id"]))
+		{
+			return $_GET["week_id"] == $week->id;
+		}
+		else
+		{
+			return date("Y-m-d") >= $week->start_date && date("Y-m-d") <= $week->end_date;
+		}
 	}
 
 
