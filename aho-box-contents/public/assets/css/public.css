@@ -4,7 +4,7 @@
   border: none;
   border-collapse: collapse;
   margin: 10px;
-  width: 40%;
+  width: 47%;
 }
 
 #aho-box-contents table.table th
@@ -35,6 +35,13 @@
   margin: 0;
   padding: 0;
   width: 66%;
+}
+
+#aho-box-contents .col-lg-6
+{
+  margin: 0;
+  padding: 0;
+  width: 50%;
 }
 
 #aho-box-contents .pull-left

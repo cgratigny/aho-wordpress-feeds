@@ -14,11 +14,11 @@
 ?>
 
 <div id="aho-box-contents">
-  <h1><?php echo $delivery_days ?> Deliveries</h1>
+  <!-- <h1><?php echo $delivery_days ?> Box Contents</h1> -->
 
   <!-- This file is used to markup the public facing aspect of the plugin. -->
   <div class="row">
-    <div class="col-lg-4 pull-left">
+    <div class="col-lg-6 pull-left">
       <p>
         You are currently viewing the box contents for the week starting 
         <strong><?php echo date("F d, Y", strtotime($week->start_date)) ?></strong> and ending
@@ -30,20 +30,21 @@
         account and select "View Case Contents" on your Subscription Dashboard to see what's in your case this week.
       </p>
     </div>
-    <div class="col-lg-8 pull-left">
+    <div class="col-lg-6 pull-left">
       <a href="http://www.abundantharvestkitchen.com/category/recipes-inspired-by-the-box/">
         <img src="<?php echo plugins_url("aho-box-contents/public/assets/kitchen.jpg") ?>" />
       </a>
     </div>
   </div>
 
-  <a href="?week_id=<?php echo $previous_week ?>&charge_time_id=<?php echo $charge_time_id ?>">Previous Week</a>
+  <a href="?week_id=<?php echo $previous_week ?>&charge_time_id=<?php echo $charge_time_id ?>">Previous Week</a> | 
+  <a href="?week_id=<?php echo $next_week ?>&charge_time_id=<?php echo $charge_time_id ?>">Next Week</a>
   <?php if(empty($boxes)): ?>
-    <p><strong>AHO is taking the week off.  No deliveries scheduled this week.</strong></p>
+    <p><strong>The box contents haven't been published yet for this week.</strong></p>
   <?php else: ?>
     <div class="row">
       <?php foreach($boxes as $box): ?>
-        <table class="table pull-left">
+        <table class="table pull-left box-contents">
           <thead>
             <tr>
               <th><?php echo $box->box_type->name ?> Box</th>

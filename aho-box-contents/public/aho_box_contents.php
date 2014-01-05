@@ -57,8 +57,8 @@ class Aho_Box_Contents {
 	 */
 	protected static $instance = null;
 
-	// private $base_uri = "https://my.abundantharvestorganics.com/api/";
-	private $base_uri = "http://localhost:5000/api/";
+	private $base_uri = "https://my.abundantharvestorganics.com/api/";
+	// private $base_uri = "http://localhost:5000/api/";
 
 	/**
 	 * Initialize the plugin by setting localization and loading public scripts
@@ -357,13 +357,13 @@ class Aho_Box_Contents {
 		switch ($charge_time)
 		{
 			case 1:
-				return "Monday, Friday and Saturday";
+				return "Friday and Saturday ";
 				break;
 			case 2:
 				return "Monday, Tuesday and Wednesday";
 				break;
 			case 3:
-				return "Thursday and Friday";
+				return "Thursday ";
 				break;
 		}
 	}
