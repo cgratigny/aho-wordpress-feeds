@@ -9,6 +9,7 @@ function p($s)
 	echo "<pre>";
 	print_r($s);
 	echo "</pre>";
+	
 }
 
 function ahofeed_admin() 
@@ -220,11 +221,10 @@ function ahofeed_delivery_sites()
 			  <?php if($delivery->status == "pending"): ?>
 			    <br /><span class="coming-soon">Deliveries Coming Soon...get more info</span>
 			  <?php endif; ?>
-			  
-			  <?php if($delivery->home_delivery && $delivery->authenticate): ?>
-			    <br /><span class="passcode-required">Passcode required for this site</span>
-			  <?php endif; ?>
 			</a>
+			<?php if($delivery->home_delivery && $delivery->authenticate): ?>
+			  <br /><span class="passcode-required"><?=$delivery->home_site_message?></span>
+			<?php endif; ?>
 			<div class="address">
 				<?=$delivery->address->address1?> <?=$delivery->address->address2?>
 				<?=$delivery->address->city?> <?=$delivery->address->state?> <?=$delivery->address->postal_code?>
