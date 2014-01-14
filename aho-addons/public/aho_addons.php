@@ -288,7 +288,7 @@ class Aho_Addons {
 	 */
 	public function render_addons($atts)
 	{
-		$week = $this->get_week();
+		$week = $week_obj = $this->get_week();
 
 		extract( shortcode_atts( array(
 			'week' => esc_attr( $week->id ),

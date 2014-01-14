@@ -20,8 +20,8 @@
       <!-- This file is used to markup the public facing aspect of the plugin. -->
       <p>
         You are currently viewing the available add-ons for the week starting
-        <strong><?php echo date("F d, Y", strtotime($week->start_date)) ?></strong> and ending
-        <strong><?php echo date("F d, Y", strtotime($week->end_date)) ?></strong>.
+        <strong><?php echo date("F d, Y", strtotime($week_obj->start_date)) ?></strong> and ending
+        <strong><?php echo date("F d, Y", strtotime($week_obj->end_date)) ?></strong>.
       </p>
 
       <p>
