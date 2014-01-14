@@ -14,7 +14,6 @@
 ?>
 
 <div id="aho-addons">
-  <h1>This Week's Add-Ons</h1>
 
   <div class="row">
     <div class="pull-left col-lg-8">
@@ -36,7 +35,7 @@
         <a href="?week=<?php echo $next_week ?>">Next Week</a>
       </div>
       <?php if(empty($add_ons)): ?>
-        <p><strong>AHO is taking the week off.  No deliveries scheduled this week.</strong></p>
+        <p><strong>The addons haven't been published for this week.</strong></p>
       <?php else: ?>
         <table class="table">
           <?php foreach($add_ons as $add_on): ?>

@@ -57,8 +57,8 @@ class Aho_Box_Contents {
 	 */
 	protected static $instance = null;
 
-	// private $base_uri = "https://my.abundantharvestorganics.com/api/";
-	private $base_uri = "http://localhost:5000/api/";
+	private $base_uri = "https://my.abundantharvestorganics.com/api/";
+	// private $base_uri = "http://localhost:5000/api/";
 
 	/**
 	 * Initialize the plugin by setting localization and loading public scripts
@@ -297,6 +297,7 @@ class Aho_Box_Contents {
 
 		$boxes = $this->get_boxes($week_id, $charge_time_id);
 		$previous_week = $this->previous_week($week_id);
+		$next_week = $this->next_week($week_id);
 		$delivery_days = $this->delivery_days($charge_time_id);
 
 		require_once( plugin_dir_path( __FILE__ ) . 'views/boxes.php' );
@@ -357,13 +358,13 @@ class Aho_Box_Contents {
 		switch ($charge_time)
 		{
 			case 1:
-				return "Monday, Friday and Saturday";
+				return "Friday and Saturday ";
 				break;
 			case 2:
 				return "Monday, Tuesday and Wednesday";
 				break;
 			case 3:
-				return "Thursday and Friday";
+				return "Thursday ";
 				break;
 		}
 	}
@@ -417,6 +418,18 @@ class Aho_Box_Contents {
 	private function previous_week($week)
 	{
 		return $this->get_week()->id - 1;
+	}
+
+
+	/**
+	 * Check the records to find the previous week
+	 *
+	 * @return int
+	 * @author Brandon Hansen
+	 **/
+	private function next_week($week)
+	{
+		return $this->get_week()->id + 1;
 	}
 
 }
