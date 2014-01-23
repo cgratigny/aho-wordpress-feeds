@@ -312,11 +312,11 @@ class Aho_Addons {
 	public function get_addons($week)
 	{
 		$option_name = "{$this->base_uri}add_ons.json?week={$week}";
+
 		if(isset($_GET["reset_addon_cache"]))
 		{
 			delete_option(sanitize_title($option_name));
 		}
-		
 		$add_ons = get_option(sanitize_title($option_name));
 
 		if(empty($add_ons))

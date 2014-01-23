@@ -43,7 +43,7 @@
               <td>
                 <h4><?php echo $add_on->adminized_title ?></h4>
                 <p>
-                  Grower(s): <a href="mailto:<?php echo $add_on->vendor->email ?>"><?php echo $add_on->vendor->company ?></a><br />
+                  Grower(s): <a href="<?php echo $add_on->vendor->contact_link ?>"><?php echo $add_on->vendor->display_name ?></a><br />
                   Price Each: $<?php echo $add_on->sale_price ?>
                 </p>
               </td>
