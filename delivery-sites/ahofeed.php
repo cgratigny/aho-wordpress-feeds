@@ -286,7 +286,7 @@ function ahofeed_delivery_site()
 		</div>
 		<div class="col1">
 			<h2 class="welcome">Welcome to this Delivery Site!</h2>	
-			<p><?=$delivery->host_message?></p>
+			<p class="host_message"><?=$delivery->host_message?></p>
 
 			<?php if($delivery->box_prices && $delivery->box_prices->small): ?>
 			  <h4>Box Prices for this Delivery Site:</h4>	

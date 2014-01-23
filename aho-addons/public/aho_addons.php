@@ -312,6 +312,10 @@ class Aho_Addons {
 	public function get_addons($week)
 	{
 		$option_name = "{$this->base_uri}add_ons.json?week={$week}";
+		$add_ons = file_get_contents($option_name);
+		$add_ons = json_decode($add_ons);
+		return $add_ons;
+
 		$add_ons = get_option(sanitize_title($option_name));
 
 		if(empty($add_ons))
